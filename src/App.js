@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./components/header/header";
+import Form from "./components/form/form";
+import History from "./components/histroy/history";
+import { useState } from "react";
 
 function App() {
+  let localData = JSON.parse(localStorage.getItem("RESTyHistory"));
+  let [renderedData, setRenderedData] = useState(localData);
+  const getFormDataHandler = (data) => {
+    localData ? (localData = localData) : (localData = []);
+    localStorage.setItem("RESTyHistory", JSON.stringify([...localData, data]));
+    setRenderedData(JSON.parse(localStorage.getItem("RESTyHistory")));
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header></Header>
+      <Form getFormData={getFormDataHandler}></Form>
+      <History
+        getHistoryData={renderedData == null ? [] : renderedData}
+      ></History>
+    </>
   );
 }
 
