@@ -21,7 +21,7 @@ function App() {
       <History
         getHistoryData={renderedData == null ? [] : renderedData}
       ></History>
-      <Results getResultsData={resultsData}></Results>
+      {/* <Results getResultsData={resultsData}></Results> */}
     </>
   );
 }
