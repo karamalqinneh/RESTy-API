@@ -26,7 +26,6 @@ const NavBar = styled.nav`
 const NavItem = styled.li`
   color: #eee;
   background: #550202;
-
   list-style-type: none;
   padding: 0.925rem 4vw;
   &:hover {

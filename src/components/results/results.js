@@ -1,14 +1,22 @@
 import axios from "axios";
 import styled from "styled-components";
+import { useState } from "react";
 
 function Results(props) {
   let endPoint = props.getResultsData.endPoint;
-  let response;
+  let [resutlsData, setResultsData] = useState({});
   const responseHandler = async () => {
-    let request = await axios.get(endPoint);
-    return request;
+    fetch(endPoint, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    }).then((res) => {
+      setResultsData(res.data);
+    });
   };
-  console.log(responseHandler().data);
+  console.log(responseHandler());
+  console.log(resutlsData, "$$$$$");
   return <div>test</div>;
 }
 
