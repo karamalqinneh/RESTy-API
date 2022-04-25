@@ -59,6 +59,7 @@ const TextArea = styled.textarea`
 `;
 function Form(props) {
   const endPointInputRef = useRef();
+  const methodsDivRef = useRef();
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -66,9 +67,18 @@ function Form(props) {
       endPoint: endPointInputRef.current.value,
       method: "GET",
     });
-    // props.editHistoryData();
   };
-  // props.getFormData("TEST");
+  let keysArray = [
+    <Keys key="1">Get</Keys>,
+    <Keys key="2">Post</Keys>,
+    <Keys key="3">Put</Keys>,
+    <Keys key="4">Delete</Keys>,
+  ];
+  const classesHandler = (e) => {
+    const children = [].slice.call(methodsDivRef.current.children);
+    children.forEach((ele) => ele.classList.remove("active"));
+    e.target.classList.add("active");
+  };
   return (
     <FormData onSubmit={submitHandler}>
       <StylingDiv>
@@ -76,11 +86,8 @@ function Form(props) {
         <Button type="submit">Go</Button>
       </StylingDiv>
       <StylingDiv>
-        <div>
-          <Keys>Get</Keys>
-          <Keys>Post</Keys>
-          <Keys>Put</Keys>
-          <Keys>Delete</Keys>
+        <div ref={methodsDivRef} onClick={classesHandler}>
+          {keysArray}
         </div>
         <TextArea></TextArea>
       </StylingDiv>
