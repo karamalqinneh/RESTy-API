@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useRef } from "react";
+
 const FormData = styled.form`
   display: flex;
   justify-content: space-around;
@@ -60,24 +61,30 @@ const TextArea = styled.textarea`
 function Form(props) {
   const endPointInputRef = useRef();
   const methodsDivRef = useRef();
+  const bodyDivRef = useRef();
+  let methodHandler;
 
-  const submitHandler = (event) => {
-    event.preventDefault();
-    props.getFormData({
-      endPoint: endPointInputRef.current.value,
-      method: "GET",
-    });
-  };
   let keysArray = [
-    <Keys key="1">Get</Keys>,
-    <Keys key="2">Post</Keys>,
-    <Keys key="3">Put</Keys>,
-    <Keys key="4">Delete</Keys>,
+    <Keys key="1" value={"get"}>
+      GET
+    </Keys>,
+    <Keys key="2">POST</Keys>,
+    <Keys key="3">PUT</Keys>,
+    <Keys key="4">DELETE</Keys>,
   ];
   const classesHandler = (e) => {
     const children = [].slice.call(methodsDivRef.current.children);
     children.forEach((ele) => ele.classList.remove("active"));
     e.target.classList.add("active");
+    methodHandler = e.target.innerHTML;
+  };
+  const submitHandler = (event) => {
+    event.preventDefault();
+    props.getFormData({
+      endPoint: endPointInputRef.current.value,
+      method: methodHandler,
+      body: bodyDivRef.current.value,
+    });
   };
   return (
     <FormData onSubmit={submitHandler}>
@@ -89,7 +96,7 @@ function Form(props) {
         <div ref={methodsDivRef} onClick={classesHandler}>
           {keysArray}
         </div>
-        <TextArea></TextArea>
+        <TextArea ref={bodyDivRef}></TextArea>
       </StylingDiv>
     </FormData>
   );

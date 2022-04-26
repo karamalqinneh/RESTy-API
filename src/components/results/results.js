@@ -1,6 +1,7 @@
-import axios from "axios";
 import styled from "styled-components";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useState } from "react";
+import JSONPretty from "react-json-pretty";
+
 const Container = styled.section`
   display: flex;
   flex-direction: column;
@@ -9,31 +10,43 @@ const Container = styled.section`
 `;
 
 function Results(props) {
-  let endPoint = "https://isupport-server.herokuapp.com/trending";
+  let endPoint = props.getResultsData.endPoint;
   let [response, setResponse] = useState();
-  const fetchDataHandler = useCallback(async () => {
-    const res = await fetch(endPoint);
-    const data = await res.json();
-    setResponse(data);
-  }, []);
+  let [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchDataHandler();
-  }, [fetchDataHandler]);
+    setIsLoading(false);
+    async function fetchData() {
+      const res = await fetch(endPoint, {
+        method: props.getResultsData.method,
+        body: props.getResultsData.body
+          ? JSON.stringify(props.getResultsData.body)
+          : null,
+      });
+      const data = await res.json();
+      setResponse(data);
+      console.log("WORKING");
+    }
+    fetchData();
+    setTimeout(() => setIsLoading(true), 500);
+  }, [endPoint]);
   console.log(response);
-  return (
-    <Container>
-      <h2 style={{ width: "80%" }}>Headers</h2>
-      <div>
-        root: "content-length": "55", "content-type": "application/json;
-        charset=utf-8"
-      </div>
-      <h2 style={{ width: "80%" }}>Results</h2>
-      <div>
-        root: [ "Quit smoking", "Health Lifestyle", "Healthy Lifestyle" ]
-      </div>
-    </Container>
-  );
+
+  let output =
+    isLoading === false ? (
+      <p>Loading</p>
+    ) : (
+      <Container>
+        <h2 style={{ width: "80%", margin: "2vh, 0" }}>Results</h2>
+        <JSONPretty
+          id="json-pretty"
+          data={response}
+          style={{ width: "100%", height: "40vh", overflow: "scroll" }}
+        ></JSONPretty>
+      </Container>
+    );
+
+  return output;
 }
 
 export default Results;
