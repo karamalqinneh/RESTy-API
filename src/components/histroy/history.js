@@ -30,6 +30,7 @@ const Method = styled.div`
 `;
 
 function History(props) {
+  console.log(props.getHistoryData[props.getHistoryData.length - 1]);
   const history = props.getHistoryData.map((ele) => {
     return (
       <EndPoint key={uuidv4()}>
