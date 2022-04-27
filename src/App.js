@@ -2,9 +2,14 @@ import Header from "./components/header/header";
 import Form from "./components/form/form";
 import History from "./components/histroy/history";
 import Results from "./components/results/results";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    if (!JSON.parse(localStorage.getItem("RESTyHistory"))) {
+      localStorage.setItem("RESTyHistory", JSON.stringify([]));
+    }
+  }, []);
   let [resultsData, setRestultsData] = useState("");
   let localData = JSON.parse(localStorage.getItem("RESTyHistory"));
   let [renderedData, setRenderedData] = useState(localData);
