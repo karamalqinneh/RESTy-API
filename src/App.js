@@ -20,7 +20,7 @@ function App() {
     setRenderedData(JSON.parse(localStorage.getItem("RESTyHistory")));
   };
   return (
-    <>
+    <div style={{ width: "99.3vw", overflow: "hidden" }}>
       <Header></Header>
       <Form getFormData={getFormDataHandler}></Form>
       <div style={{ display: "flex" }}>
@@ -29,7 +29,7 @@ function App() {
         ></History>
         <Results getResultsData={resultsData}></Results>
       </div>
-    </>
+    </div>
   );
 }
 

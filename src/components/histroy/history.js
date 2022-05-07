@@ -7,7 +7,7 @@ width: 40vw;
 display: flex;
 flex-direction: column;
 justify-content: flex-start;
-overflow-y: scroll;
+overflow-y: auto;
 `;
 
 const EndPoint = styled.li`
@@ -30,11 +30,10 @@ const Method = styled.div`
 `;
 
 function History(props) {
-  console.log(props.getHistoryData[props.getHistoryData.length - 1]);
   const history = props.getHistoryData.map((ele) => {
     return (
       <EndPoint key={uuidv4()}>
-        <Method>{ele.method}</Method>
+        <Method>{ele.method ? ele.method : "GET"}</Method>
         <div
           style={{
             marginLeft: "1rem",
@@ -49,7 +48,6 @@ function History(props) {
     );
   });
   return (
-    // <Container>{!props.renderedData ? history : <p>No History</p>}</Container>
     <Container>
       {props.getHistoryData ? history : <p>No History Yet</p>}
     </Container>

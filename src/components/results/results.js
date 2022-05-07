@@ -9,6 +9,13 @@ const Container = styled.section`
   width: 50vw;
 `;
 
+let headers = {
+  root: {
+    "content-length": "55",
+    "content-type": "application/json charset=utf-8",
+  },
+};
+
 function Results(props) {
   let endPoint = props.getResultsData.endPoint;
   let [response, setResponse] = useState();
@@ -25,12 +32,10 @@ function Results(props) {
       });
       const data = await res.json();
       setResponse(data);
-      console.log("WORKING");
     }
     fetchData();
     setTimeout(() => setIsLoading(true), 500);
   }, [endPoint]);
-  console.log(response);
 
   let output =
     isLoading === false ? (
@@ -41,12 +46,24 @@ function Results(props) {
         <JSONPretty
           id="json-pretty"
           data={response}
-          style={{ width: "100%", height: "40vh", overflow: "scroll" }}
+          style={{ width: "100%", height: "35vh", overflow: "auto" }}
         ></JSONPretty>
       </Container>
     );
 
-  return output;
+  return (
+    <Container>
+      <Container>
+        <h2 style={{ width: "80%", margin: "2vh, 0" }}>Headers</h2>
+        <JSONPretty
+          id="json-pretty"
+          data={headers}
+          style={{ width: "100%", height: "20vh", overflow: "auto" }}
+        ></JSONPretty>
+      </Container>
+      {output}
+    </Container>
+  );
 }
 
 export default Results;
