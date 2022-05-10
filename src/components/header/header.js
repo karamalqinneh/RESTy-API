@@ -34,7 +34,7 @@ const NavItem = styled.li`
   }
 `;
 
-function Header() {
+function Header(props) {
   return (
     <>
       <Heading>
