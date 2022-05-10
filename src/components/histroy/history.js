@@ -16,6 +16,11 @@ const EndPoint = styled.li`
   width: 100%;
   height: 3rem;
   margin-bottom: 0.5rem;
+  cursor: pointer;
+  &:hover {
+    border: 3px solid red;
+    padding: 0.25rem;
+  }
 `;
 
 const Method = styled.div`
@@ -30,9 +35,13 @@ const Method = styled.div`
 `;
 
 function History(props) {
+  const deleteHandler = (ele) => {
+    props.updateHistoryData(ele);
+  };
+  console.log(props.getHistoryData);
   const history = props.getHistoryData.map((ele) => {
     return (
-      <EndPoint key={uuidv4()}>
+      <EndPoint key={uuidv4()} onClick={() => deleteHandler(ele)}>
         <Method>{ele.method ? ele.method : "GET"}</Method>
         <div
           style={{
