@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
 const Heading = styled.div`
   width: 100vw;
   height: 12.5vh;
@@ -23,10 +25,10 @@ const NavBar = styled.nav`
   align-items: center;
 `;
 
-const NavItem = styled.li`
+const StyledLink = styled(Link)`
   color: #eee;
   background: #550202;
-  list-style-type: none;
+  text-decoration: none;
   padding: 0.925rem 4vw;
   &:hover {
     background: #111;
@@ -41,9 +43,9 @@ function Header(props) {
         <H1>RESTy</H1>
       </Heading>
       <NavBar>
-        <NavItem>Home</NavItem>
-        <NavItem>History</NavItem>
-        <NavItem>Help</NavItem>
+        <StyledLink to="/">Home</StyledLink>
+        <StyledLink to="/history">History</StyledLink>
+        <StyledLink to="/support">Support</StyledLink>
       </NavBar>
     </>
   );
