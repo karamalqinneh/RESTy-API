@@ -20,6 +20,8 @@ export default function historyReducer(state = initialState, action) {
       const history = [...state.history, payload];
       localStorage.setItem("RESTyHistory", JSON.stringify(history));
       return { count, history };
+    case "GET_HISTORY":
+      return [...state.history];
     case "REMOVE_HISTORY":
       const decCount = state.count - 1;
       const updatedHistoy = state.history.filter((ele) => ele !== payload);
@@ -41,5 +43,11 @@ export const removeAction = (history) => {
   return {
     type: "REMOVE_HISTORY",
     payload: history,
+  };
+};
+
+export const getData = () => {
+  return {
+    type: "GET_HISTORY",
   };
 };

@@ -19,6 +19,7 @@ let headers = {
 function Results(props) {
   let endPoint = props.getResultsData.endPoint;
   let [response, setResponse] = useState();
+  let [responseHeaders, setResponseHeaders] = useState();
   let [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -31,11 +32,13 @@ function Results(props) {
           : null,
       });
       const data = await res.json();
+      const head = await res.headers;
       setResponse(data);
+      setResponseHeaders(head);
     }
     fetchData();
     setTimeout(() => setIsLoading(true), 500);
-  }, [endPoint]);
+  }, [endPoint, props.getResultsData.method, props.getResultsData.body]);
 
   let output =
     isLoading === false ? (
@@ -57,7 +60,7 @@ function Results(props) {
         <h2 style={{ width: "80%", margin: "2vh, 0" }}>Headers</h2>
         <JSONPretty
           id="json-pretty"
-          data={headers}
+          data={responseHeaders}
           style={{ width: "100%", height: "20vh", overflow: "auto" }}
         ></JSONPretty>
       </Container>
